@@ -839,6 +839,32 @@ body.shake{ animation:shakey .45s ease-in-out; }
 
 <audio id="firstladyAudio" src="assets/firstlady.mp3" preload="none"></audio>
 
+<!-- assets.js carries all images/audio as base64 text (lets the whole site ship through
+     GitHub's API with no binary uploads). If it's missing or empty, the site gracefully
+     falls back to loading real files from the assets/ folder instead. -->
+<script src="assets.js"></script>
+<script>
+/* asset bootstrap — swap assets/* references for the embedded base64 versions */
+(function(){
+  var A = window.__MRSCC_ASSETS || {};
+  function fix(u){ if(!u) return u; var m = /^assets\/(.+)$/.exec(u); return (m && A[m[1]]) ? A[m[1]] : u; }
+  window.__fixAsset = fix;
+  if (Object.keys(A).length){
+    document.querySelectorAll('img, audio, link[rel="icon"]').forEach(function(el){
+      var attr = el.tagName === 'LINK' ? 'href' : 'src';
+      var v = el.getAttribute(attr); var f = fix(v); if (f !== v) el.setAttribute(attr, f);
+    });
+    document.querySelectorAll('[data-images]').forEach(function(el){
+      el.setAttribute('data-images', el.getAttribute('data-images').split('|').map(fix).join('|'));
+    });
+    var st = document.createElement('style');
+    st.textContent = '.walker .sprite{ background-image:url("' + fix('assets/walk-strip.png') + '") !important; }' +
+                     '.es .es-knob{ background-image:url("' + fix('assets/favicon.png') + '") !important; }';
+    document.head.appendChild(st);
+  }
+})();
+</script>
+
 <script>
 /* ╔═══════════════════════════════════════════════════════════════════╗
    ║  ⚙️⚙️⚙️  MRSCASHCAT CONFIG — EDIT ME WHEN THE COIN GOES LIVE  ⚙️⚙️⚙️  ║
@@ -1456,7 +1482,7 @@ function maximumMeow(){
     for (let i=0;i<N;i++){
       setTimeout(() => {
         const img = document.createElement('img');
-        img.src = Math.random()<0.6 ? 'assets/mrscashcat.png' : 'assets/rollingpin.png';
+        img.src = (window.__fixAsset||(u=>u))(Math.random()<0.6 ? 'assets/mrscashcat.png' : 'assets/rollingpin.png');
         img.className = 'fx';
         const sz = rand(50,150);
         img.style.width = sz+'px'; img.style.left = rand(-5,100)+'vw'; img.style.top = '-180px';

@@ -1,13 +1,21 @@
 # 😹💍 MRSCASHCAT — the First Lady of the Robinhood Chain
 
 A maximum-chaos meme site for **$MRSCASHCAT**. 100% static — no build step, no npm, no framework.
-One `index.html` + an `assets/` folder. That's the whole site. MEOW.
+
+**How this deployment works:** all images + audio are embedded as base64 inside `assets.js`
+(text file), so the site is fully self-contained — no binary uploads needed. A tiny loader in
+`index.html` swaps them in; if `assets.js` is ever missing, the site falls back to loading real
+files from the `assets/` folder instead.
+
+**Optional:** upload the real `assets/` folder (from the release zip) to also enable the social
+link-preview banner — the `og:image` tag points at `assets/banner.jpg`, and social scrapers
+need a real image file. Everything else works without it. MEOW.
 
 ---
 
 ## 🚨 THE ONE THING YOU NEED TO EDIT AT LAUNCH
 
-Open **`index.html`** and search for **`EDIT ME`** (top of the big `<script>` block — the `CA:` line is ~line 843):
+Open **`index.html`** and search for **`EDIT ME`** (top of the big `<script>` block):
 
 ```js
 const CONFIG = {
