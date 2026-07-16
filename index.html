@@ -875,11 +875,11 @@ body.shake{ animation:shakey .45s ease-in-out; }
    ║  2. Add your links. Empty string = funny "not yet" toast.         ║
    ╚═══════════════════════════════════════════════════════════════════╝ */
 const CONFIG = {
-  CA: "0x0000000000000000000000000000000000FAKE",   //  ←←← PASTE REAL CA HERE
+  CA: "0x034a7ba55b4081b43CCAaa0eb85CbB385f9ABfcC",   //  ←←← LIVE. she is done with her makeup. 💅
   TICKER: "$MRSCASHCAT",
   X_URL: "",          // e.g. "https://x.com/mrscashcat"
-  TELEGRAM_URL: "",   // e.g. "https://t.me/mrscashcat"
-  DEX_URL: "",        // e.g. your dexscreener / dex link — buy buttons use this once set
+  TELEGRAM_URL: "https://t.me/+xFnA8QTaGwhmNjA1",
+  DEX_URL: "",        // e.g. your dexscreener / dex link — buy buttons open this once set
 };
 /* ═══════════════════ end of config. chaos below. ═══════════════════ */
 
@@ -1171,6 +1171,7 @@ $$('.buy-btn').forEach(b => b.addEventListener('click', e => {
   shake(); meow(1.1);
   if (CONFIG.DEX_URL) { window.open(CONFIG.DEX_URL,'_blank','noopener'); }
   else if (SOON) toast("not live yet, kitten. the CA drops soon. stay hydrated (with tears). 💧");
+  else toast("copy the CA below and swap it on the DEX. tell your wife AFTER. 💍");
 }));
 /* copy CA */
 $$('[data-copy-ca]').forEach(b => b.addEventListener('click', () => {
